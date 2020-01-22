@@ -16,6 +16,7 @@ get "/" do
   redirect "/lists"
 end
 
+# View list of lists
 get "/lists" do
   # binding.pry
   @lists = session[:lists]
@@ -23,11 +24,14 @@ get "/lists" do
   erb :lists
 end
 
+# Render the new list form
 get "/lists/new" do
   erb :new_list
 end
 
+# Create a new list
 post "/lists" do
   session[:lists] << { name: params[:list_name], todos: [] }
+  session[:success] = "The list has been created."
   redirect "/lists"
 end
