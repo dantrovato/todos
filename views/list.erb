@@ -1,24 +1,13 @@
-<% #binding.pry %>
 <section id="todos">
   <header>
     <h2><%= @list[:name] %></h2>
+    <ul>
+      <li>
+        <a class="edit" href="/lists/<%= params[:id] %>/edit">Edit List</a>
+      </li>
+    </ul>
   </header>
 </section>
-
-<form action="/lists/<%= params[:id] %>" method="POST">
-  <dl>
-    <dt>
-      <label for="list_name">Enter a new todo item:</label>
-    </dt>
-    <dd>
-      <input name="list_name" placeholder="Todo text" type="text" value="">
-    </dd>
-  </dl>
-  <fieldset class="actions">
-    <input type="submit" values="Save">
-    <a href="/lists/<%= params[:id] %>">Cancel</a>
-  </fieldset>
-</form>
 
 <% content_for :header_links do %>
   <a href="/lists">All Lists</a>
