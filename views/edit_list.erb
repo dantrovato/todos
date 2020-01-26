@@ -1,9 +1,11 @@
-<!-- <section id="todos">
+<section id="todos">
   <header>
-    <h2><%= @list[:name] %></h2>
+    <h2>Editing '<%= @list[:name] %>'</h2>
     <ul>
       <li>
-        <a class="edit" href="/lists/<%= params[:id] %>/edit">Edit List</a>
+        <form action="/lists/<%= params[:id] %>/destroy" method="POST">
+          <button class="delete" type="submit" value="Delete List">Delete List</button>
+        </form>
       </li>
     </ul>
   </header>
@@ -12,7 +14,6 @@
 <% content_for :header_links do %>
   <a href="/lists">All Lists</a>
 <% end %>
--->
 
 <form action="/lists/<%= params[:id] %>" method="POST">
   <dl>
@@ -24,7 +25,7 @@
     </dd>
   </dl>
   <fieldset class="actions">
-    <input type="submit" values="Save">
+    <input type="submit" value="Save">
     <a href="/lists/<%= params[:id] %>">Cancel</a>
   </fieldset>
 </form>
