@@ -128,21 +128,6 @@ post '/lists/:list_id/todos/:id/destroy' do
   redirect "/lists/#{@list_id}"
 end
 
-# Complete a todo from a list
-# post '/lists/:list_id/todos/:id/completed' do
-#   @list_id = params[:list_id].to_i
-#   @list = session[:lists][@list_id]
-#   @todo_id = params[:id].to_i
-#   if @list[:todos][@todo_id][:completed]
-#     @list[:todos][@todo_id][:completed] = false
-#     session[:success] = "The todo has been updated as incomplete."
-#   else
-#     @list[:todos][@todo_id][:completed] = true
-#     session[:success] = "The todo has been completed."
-#   end
-#   redirect "/lists/#{@list_id}"
-# end
-
 # Update the status of todo
 post '/lists/:list_id/todos/:id' do
   @list_id = params[:list_id].to_i
@@ -153,5 +138,18 @@ post '/lists/:list_id/todos/:id' do
   @list[:todos][todo_id][:completed] = is_completed
 
   session[:success] = "The todo has been updated."
+  redirect "/lists/#{@list_id}"
+end
+
+# Mark all todos as complete for a list
+post '/lists/:id/complete_all' do
+  @list_id = params[:id].to_i
+  @list = session[:lists][@list_id]
+
+  @list[:todos].each do |todo|
+    todo[:completed] = true
+  end
+
+  session[:success] = "All the todos have been completed."
   redirect "/lists/#{@list_id}"
 end
