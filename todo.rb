@@ -1,8 +1,7 @@
 require 'sinatra'
-require 'sinatra/reloader'
+require 'sinatra/reloader' if development?
 require 'sinatra/content_for'
 require 'tilt/erubis'
-require 'pry'
 
 configure do
   enable :sessions
@@ -15,7 +14,6 @@ helpers do
   end
 
   def list_class(list)
-    # binding.pry
     "complete" if list_complete?(list)
   end
 
@@ -52,7 +50,7 @@ end
 
 # View list of lists
 get '/lists' do
-  # binding.pry
+
   @lists = session[:lists]
 
   erb :lists
@@ -109,7 +107,7 @@ end
 
 # Update an existing todo list
 post '/lists/:id' do
-  list_name = params[:list_name].strip.squeeze(' ')
+  list_name = params[:list_name].strip.squeeze(' ').capitalize
   id = params[:id].to_i
   @list = session[:lists][id]
 
@@ -118,7 +116,7 @@ post '/lists/:id' do
     session[:error] = error
     erb :edit_list
   else
-    # binding.pry
+
     @list[:name] = list_name
     session[:success] = 'The list has been edited.'
     redirect "/lists/#{id}"
